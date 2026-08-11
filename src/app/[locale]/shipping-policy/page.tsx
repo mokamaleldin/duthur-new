@@ -1,0 +1,1 @@
+export default function Page(){return <main className="policy"><h1>Shipping Policy</h1><p>Orders are currently delivered inside Türkiye only. Shipping prices and pickup availability are shown at checkout before the order is confirmed.</p></main>}

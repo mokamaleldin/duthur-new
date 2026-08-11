@@ -1,0 +1,3 @@
+import { isLocale } from '@/lib/i18n'; import { notFound } from 'next/navigation';
+const copy={ar:['دُثُر','براند ملابس يحمل الهوية العربية بهدوء، من غير صخب ولا مبالغة. نصنع قطعًا بسيطة تحمل معنى وتعيش معك.'],en:['DUTHUR','A clothing brand carrying Arab identity quietly — without noise or excess. We make simple pieces with meaning, designed to stay with you.'],tr:['DUTHUR','Arap kimliğini sakin ve sade bir şekilde taşıyan bir giyim markası. Anlamı olan, uzun süre giyilecek parçalar üretiyoruz.']};
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!isLocale(locale))notFound();return <main className="editorial-page"><p className="eyebrow">ABOUT DUTHUR</p><h1>{copy[locale][0]}</h1><p>{copy[locale][1]}</p></main>}

@@ -1,0 +1,51 @@
+export type Locale = 'ar' | 'en' | 'tr';
+
+export type ProductImage = { id: string; storage_path: string; alt_text: string; position: number };
+export type ProductVariant = {
+  id: string;
+  product_id: string;
+  sku: string | null;
+  option_values: Record<string, string>;
+  price: number;
+  compare_at_price: number | null;
+  stock_quantity: number;
+  active: boolean;
+  position: number;
+};
+export type Product = {
+  id: string;
+  slug: string;
+  title_ar: string;
+  title_en: string;
+  title_tr: string;
+  description_ar: string;
+  description_en: string;
+  description_tr: string;
+  base_price: number;
+  compare_at_price: number | null;
+  active: boolean;
+  featured: boolean;
+  size_chart: Array<{size:string; length:number; chest:number; sleeve:number}>;
+  material_fit_ar: string;
+  material_fit_en: string;
+  material_fit_tr: string;
+  shipping_ar: string;
+  shipping_en: string;
+  shipping_tr: string;
+  care_ar: string;
+  care_en: string;
+  care_tr: string;
+  product_images?: ProductImage[];
+  product_variants?: ProductVariant[];
+};
+export type CartItem = {
+  variantId: string;
+  productId: string;
+  slug: string;
+  title: string;
+  image: string;
+  optionValues: Record<string,string>;
+  price: number;
+  quantity: number;
+  stock: number;
+};

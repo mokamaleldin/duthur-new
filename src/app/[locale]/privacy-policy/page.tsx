@@ -1,0 +1,1 @@
+export default function Page(){return <main className="policy"><h1>Privacy Policy</h1><p>We collect the information necessary to process orders and contact requests. Customer addresses and order details are restricted to store administration.</p></main>}

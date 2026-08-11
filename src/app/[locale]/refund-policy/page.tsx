@@ -1,0 +1,1 @@
+export default function Page(){return <main className="policy"><h1>Refund & Exchange Policy</h1><p>For exchange or return questions, contact DUTHUR with your order number and the item condition. Final eligibility follows the store policy and applicable consumer law.</p></main>}
