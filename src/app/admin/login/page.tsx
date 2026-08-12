@@ -1,26 +1,34 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/browser';
 
 export default function AdminLogin() {
   const supabase = useMemo(() => createClient(), []);
+  const router = useRouter();
   const [message, setMessage] = useState('');
+  const [busy, setBusy] = useState(false);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const email = String(new FormData(e.currentTarget).get('email') || '').trim();
-    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || window.location.origin).replace(/\/$/, '');
+    setBusy(true);
+    setMessage('');
 
-    setMessage('Sending…');
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${siteUrl}/auth/callback?next=/admin`,
-      },
-    });
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get('email') || '').trim().toLowerCase();
+    const password = String(form.get('password') || '');
 
-    setMessage(error ? error.message : 'Check your email for the secure login link.');
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setMessage('Email or password is incorrect.');
+      setBusy(false);
+      return;
+    }
+
+    router.replace('/admin');
+    router.refresh();
   }
 
   return (
@@ -28,10 +36,15 @@ export default function AdminLogin() {
       <form onSubmit={submit}>
         <div className="admin-mark">دُثُر</div>
         <h1>DUTHUR Admin</h1>
-        <p>Use the approved store admin email.</p>
-        <input required type="email" name="email" placeholder="Admin email" />
-        <button className="primary">Send login link</button>
-        {message && <p>{message}</p>}
+        <p>Sign in with your approved admin email and password.</p>
+
+        <input required type="email" name="email" placeholder="Admin email" autoComplete="username" />
+        <input required type="password" name="password" placeholder="Password" autoComplete="current-password" />
+
+        <button className="primary" disabled={busy}>
+          {busy ? 'Signing in…' : 'Sign in'}
+        </button>
+        {message && <p className="form-error">{message}</p>}
       </form>
     </main>
   );
